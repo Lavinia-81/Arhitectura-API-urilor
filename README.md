@@ -1,7 +1,7 @@
-# API – De la Creare la Monetizare
+# Arhitectura si Securitatea API-urilor Moderne
 Resurse oficiale ale cărții
 
-Acesta este repository‑ul central al cărții API – De la Creare la Monetizare, locul unde cititorii găsesc toate resursele auxiliare: cod, diagrame, exerciții, soluții, exemple și materiale suplimentare.
+Acesta este repository‑ul central al cărții Arhitectura si Securitatea API-urilor Moderne, locul unde cititorii găsesc toate resursele auxiliare: cod, diagrame, exerciții, soluții, exemple și materiale suplimentare.
 
 Cartea este construită ca un ecosistem complet, iar acest repository servește drept pagina de index pentru toate componentele.
 
@@ -9,7 +9,6 @@ Cartea este construită ca un ecosistem complet, iar acest repository servește 
 Cartea este însoțită de trei repository‑uri dedicate, fiecare având un rol clar:
 
 ## 1️⃣ Poezii API – Proiectul complet al cărții
-👉 https://github.com/<username>/poezii-api  
 Conține aplicația completă Fastify + TypeScript + Prisma + Redis, folosită ca studiu de caz în carte.
 Include:
 ```
@@ -33,7 +32,6 @@ Este proiectul principal pe care se bazează capitolele tehnice.
 ---
 
 ## 2️⃣ Diagrame – Arhitectură, UML, Flowcharts
-👉 https://github.com/<username>/api-diagrams  
 Conține toate diagramele folosite în carte:
 ```
 diagrame de arhitectură API
@@ -53,8 +51,7 @@ Disponibile în formate: PNG, SVG, Mermaid, Draw.io.
 
 ---
 
-## 3️⃣ Exerciții + Soluții – Practică pe capitole
-👉 https://github.com/<username>/api-exercises-solutions  
+## 3️⃣ Exerciții + Soluții – Practică pe capitole 
 Conține exercițiile din carte și soluțiile oficiale, organizate pe capitole:
 ```
 Code
