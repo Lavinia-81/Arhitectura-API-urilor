@@ -12,7 +12,8 @@ Proiectul este realizat cu Fastify + TypeScript, include rate limiting inteligen
 ---
 ### 📘 Cartea oficială
 
-**[ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE](https://www.amazon.co.uk/dp/B0H9TFM89S)**  
+**[ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE]
+[![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S) 
 Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
 ---
 
