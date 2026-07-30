@@ -1,0 +1,55 @@
+Ex1 — Primul endpoint cu Fastify și TypeScript
+
+-----
+
+R1. Inițializare proiect
+```
+mkdir fastify-api
+cd fastify-api
+npm init -y
+npm install fastify typescript ts-node-dev @types/node
+```
+-----
+
+
+R2. tsconfig.json (strict mode activat)
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
+```
+-----
+
+
+R3. src/index.ts
+```
+import Fastify from "fastify";
+const app = Fastify();
+app.get("/health", async () => {
+  return { status: "ok" };
+});
+
+app.listen({ port: 3000 }).then(() => {
+  console.log("Server running on http://localhost:3000");
+});
+```
+-----
+
+
+R4. Rulezi serverul
+```npx ts-node-dev src/index.ts```
+
+-----
+
+
+R5. Test
+```curl http://localhost:3000/health```
+
+-----

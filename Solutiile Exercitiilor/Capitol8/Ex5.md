@@ -1,0 +1,46 @@
+Ex5. Alertă — 429, auth failures, P95 latency
+
+-----
+
+R => Poți implementa cu:
+```
+Better Stack
+Prometheus + Alertmanager
+Grafana Cloud
+```
+
+Exemplu conceptual (Prometheus / Alertmanager)
+429 responses > 50/min:
+```
+- alert: HighRateLimitResponses
+  expr: sum(rate(http_responses_total{status="429"}[1m])) > 50
+  for: 1m
+  labels:
+    severity: warning
+  annotations:
+    description: "429 responses > 50 per minute"
+```
+ -----
+
+Auth failures > 10/min:
+```
+- alert: HighAuthFailures
+  expr: sum(rate(auth_failures_total[1m])) > 10
+  for: 1m
+  labels:
+    severity: warning
+  annotations:
+    description: "Auth failures > 10 per minute"
+```
+ -----
+
+P95 latency > 800ms pentru >5 minute:
+```
+- alert: HighLatencyP95
+  expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 0.8
+  for: 5m
+  labels:
+    severity: critical
+  annotations:
+    description: "P95 latency > 800ms for more than 5 minutes"
+```
