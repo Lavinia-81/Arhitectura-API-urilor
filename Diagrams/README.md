@@ -87,7 +87,7 @@ strategii de scalare și optimizare
 Diagramele sunt concepute într-un stil editorial, minimalist și coerent, pentru a reflecta tonul profesional al cărții.
 Ele nu reprezintă un standard universal, ci o interpretare vizuală adaptată arhitecturii prezentate în lucrare și proiectului demonstrativ poezii-api.
 Pentru detalii complete, exemple de cod și implementări reale, consultați repository-ul:
-Poezii API — https://github.com/Lavinia-81/poezii-api
+Poezii API — https://github.com/Lavinia-81/Arhitectura-API-urilor/tree/main/poezii-api
 
 ---
 

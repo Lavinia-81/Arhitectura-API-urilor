@@ -1,36 +1,49 @@
-# 📚 Poezii API
+# Poezii API — API Modern pentru Literatura Română
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+[![Fastify](https://img.shields.io/badge/Fastify-4.x-black.svg)](https://fastify.dev/)
+[![Redis](https://img.shields.io/badge/Redis-7.x-red.svg)](https://redis.io/)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Node](https://img.shields.io/badge/Node.js-18+-green.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)
-![Fastify](https://img.shields.io/badge/Fastify-4.x-black.svg)
-![Redis](https://img.shields.io/badge/Redis-7.x-red.svg)
-![Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
+Poezii API este proiectul demonstrativ oficial al cărții **„ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE”**, construit pentru a exemplifica arhitectura unui API modern, scalabil, sigur și ușor de extins.
+Acest API oferă acces la poezii, autori, căutare full‑text, planuri de acces prin chei API și un sistem complet de monitorizare a consumului.
+Proiectul este realizat cu Fastify + TypeScript, include rate limiting inteligent, Redis, Prisma, JWT, logging profesional, documentație Swagger/Redoc, și respectă bunele practici prezentate în carte.
 
-API modern, rapid și scalabil pentru creearea si accesarea poeziilor din literatura română.  
-Include autentificare prin chei API, rate limiting diferențiat pe planuri și documentație completă.
+---
+### 📘 Cartea oficială
+
+**[ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE](https://www.amazon.co.uk/dp/B0H9TFM89S)**  
+Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
+---
+
+##  Obiectivul proiectului
+
+Demonstrează arhitectura unui API modern, modular și scalabil.
+Oferă un exemplu real pentru conceptele discutate în carte: routing, servicii, repository pattern, caching, securitate, deploy.
+Servește ca material educațional pentru dezvoltatori, studenți și arhitecți software.
+Permite testarea și explorarea unui API complet funcțional, cu planuri de acces și rate limiting diferențiat.
 
 ---
 
-## 🚀 Caracteristici
-
-- Acces la poezii și autori
-- Chei API cu planuri: **FREE**, **PRO**, **ENTERPRISE**
-- Rate limiting inteligent (Redis)
-- Endpoint `/v1/usage` pentru monitorizarea consumului
-- Structură modernă Fastify + TypeScript
-- Documentație Redoc & Swagger
-- Sistem de logging profesional
+## Caracteristici principale
+Acces la poezii, autori, căutare full‑text
+Chei API cu planuri: FREE, PRO, ENTERPRISE
+Rate limiting inteligent (Redis)
+Endpoint dedicat pentru monitorizarea consumului: /v1/usage
+Structură modernă: Fastify + TypeScript
+Documentație completă: Swagger & Redoc
+Logging profesional (request/response/errors)
+Validare robustă a datelor
+Securitate: JWT, API Keys, limitări pe planuri, protecție la abuz
 
 ---
 
-## 📦 Instalare
+## Instalare
 
 Instalare dependințe:
 `npm install`
 
-## ⚙️ Configurare
-
+## Configurare
 Creează un fișier .env în rădăcina proiectului:
 
 ```
@@ -45,7 +58,9 @@ REDIS_PORT=6379
 JWT_SECRET=un_secret_puternic_aici
 ```
 
-### ▶️ Rulare
+---
+
+## Rulare
 
 - Mod dezvoltare:
   `npm run dev`
@@ -59,22 +74,26 @@ npm start
 
 ---
 
-## 🔑 Autentificare
+## Autentificare
 
 API-ul folosește chei API transmise în header:
 `x-api-key: YOUR_API_KEY`
 
-Cheile API sunt asociate unui plan:
+Planurile disponibile:
+```
+FREE — limită redusă
 
-- FREE
-- PRO
-- ENTERPRISE
+PRO — limită extinsă
+
+ENTERPRISE — acces complet
+```
 
 ---
 
-### Header‑uri returnate:
+## Header‑uri returnate:
 
-```X-RateLimit-Limit
+```
+X-RateLimit-Limit
 X-RateLimit-Remaining
 X-RateLimit-Reset
 X-RateLimit-Plan
@@ -83,30 +102,31 @@ Retry-After (doar la 429)
 
 ---
 
-## 📡 Endpoint-uri
+## Endpoint-uri principale
 
 ```
-- 🔍 Healthcheck
+# Healthcheck
 `GET /health`
 
-- 🔑 API Keys
-```
-
+# API Keys
 POST /v1/api-keys` — generează o cheie API
 GET /v1/api-keys` — listează cheile API ale utilizatorului
 
 ```
 
-- 🧑‍🎨 Autori
-```
+---
 
-GET /v1/authors` — listă autori
+## Autori
+
+```GET /v1/authors` — listă autori
 GET /v1/authors/{id} - Obținerea unui Autor după ID
 GET /v1/authors?page=1&limit=20 - Listarea Autorilo
 GET /v1/authors/slug/{slug} - Obținerea unui Autor după Slug
-``
+```
 
-- ✍️ Poezii
+---
+
+## Poezii
 
 ```
 GET /v1/poems?page=1&limit=10&search=eminescu&type=LYRIC&yearMin=1880&yearMax=1900&sortBy=title&sortOrder=asc - Listarea Poeziilor (Filtrare + Sortare + Paginare)
@@ -118,18 +138,22 @@ GET /v1/poems/{id}/text - Textul integral al unei poezii
 GET /v1/poems/popular?limit=10 - Cele Mai Populare Poezii
 ```
 
-- 🛠️ Admin – Poezii
+---
 
+## Admin – Poezii
 ```
 POST /v1/poems - Creare poezie
 PUT /v1/poems/{id} - Actualizare poezie
 DELETE /v1/poems/{id} - Ștergere poezie
 ```
 
-- 📈 Usage (monitorizare consum)
+---
+
+## Usage (monitorizare consum)
   `GET /v1/usage`
-  Exemplu răspuns:
-  {
+
+ Exemplu răspuns:
+ ```{
   "plan": "PRO",
   "limit": 500,
   "used": 123,
@@ -139,12 +163,9 @@ DELETE /v1/poems/{id} - Ștergere poezie
   }
   ```
 
-  ```
+  ---
 
----
-
-## 📄 Status Codes
-
+## Status Codes
 ```
 200 — OK
 400 — Invalid request
@@ -154,33 +175,27 @@ DELETE /v1/poems/{id} - Ștergere poezie
 429 — Rate limit depășit
 500 — Eroare server
 ```
+---
 
-### 🛣️ Roadmap
+## Roadmap
 
 - Căutare avansată (full-text search)
 - Endpoint pentru imagini / manuscrise
 - Webhooks pentru consum API
 - Dashboard UI pentru utilizatori
 - Export date în format JSON/CSV
+- Sistem de abonamente PRO/ENTERPRISE
 
 ---
 
-## Clonare repository:
-
-```bash
-git clone https://github.com/<username>/poezii-api.git
-cd poezii-api
-```
-
----
-
-## 📝 Licență
+## Licență
 
 MIT License.
 
 ---
 
-## ❤️ Contribuții
+## Contribuții
 
 - Pull requests sunt binevenite.
 - Pentru schimbări majore, deschide un issue înainte.
+- Respectă stilul de cod și arhitectura proiectului.
