@@ -2,7 +2,7 @@ Ex4. Creează tabelul Usage în Prisma + funcție de calcul lunar
 
 -----
 
-R => prisma/schema.prisma
+prisma/schema.prisma
 ```
 model Usage {
   id         String   @id @default(uuid())
@@ -14,7 +14,7 @@ model Usage {
 ```
 -----
 
-R => Înregistrare usage
+Înregistrare usage
 ```
 await prisma.usage.create({
   data: {
@@ -26,7 +26,7 @@ await prisma.usage.create({
 ```
 -----
 
-R => Calcul consum lunar
+Calcul consum lunar
 ```
 // src/billing/usage.ts
 import { prisma } from "../db";
@@ -34,7 +34,7 @@ import { prisma } from "../db";
 export async function getMonthlyUsage(userId: string) {
   const start = new Date();
   start.setDate(1);
-  
+
   return prisma.usage.count({
     where: {
       user_id: userId,

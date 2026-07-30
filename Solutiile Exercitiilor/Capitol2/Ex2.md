@@ -20,7 +20,7 @@ Soluție JSON (structură editorială, matură)
 }
 ```
 
-Explicație
-data = payload-ul principal.
-meta = contextul requestului.
-links = navigare HATEOAS minimală.
+Explicație:
+- data = payload-ul principal.
+- meta = contextul requestului.
+- links = navigare HATEOAS minimală.

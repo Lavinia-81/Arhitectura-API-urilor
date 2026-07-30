@@ -32,7 +32,7 @@ export const WorksService = {
 ```
 -----
 
-Explicație
-Service-ul este independent de controller.
-Poate fi testat separat.
-Poate fi înlocuit ulterior cu repository + DB.
+Explicație:
+- Service-ul este independent de controller.
+- Poate fi testat separat.
+- Poate fi înlocuit ulterior cu repository + DB.

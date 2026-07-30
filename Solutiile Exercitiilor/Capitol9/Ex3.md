@@ -4,12 +4,12 @@ Ex3. Criptează un câmp — encryptField / decryptField
 
 Criptăm apiKey înainte de salvare.
 
-R => Cheie de criptare
+Cheie de criptare
 ```ENCRYPTION_KEY="32bytessecretkey32bytessecretkey"```
 
 -----
 
-R => Funcții de criptare
+Funcții de criptare
 ```
 // src/security/crypto.ts
 import crypto from "crypto";
@@ -35,7 +35,7 @@ export function decryptField(value: string): string {
 ```
 -----
 
-R => Salvare criptată în DB:
+Salvare criptată în DB:
 ```
 await prisma.apiKey.create({
   data: {
@@ -46,7 +46,7 @@ await prisma.apiKey.create({
 ```
 -----
 
-R => Verificare în DB:
+Verificare în DB:
 ```
 SELECT apiKey FROM apiKey;
 Rezultat: hex string criptat, nu cheia reală.

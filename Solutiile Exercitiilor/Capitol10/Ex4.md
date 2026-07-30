@@ -2,20 +2,21 @@ Ex4. Dashboard Grafana: request rate, p95 latency, error rate + alertă
 
 -----
 
-R => Metrici tipice (Prometheus)
+Metrici tipice (Prometheus)
 -> http_requests_total (counter)
 -> http_request_duration_seconds (histogram)
 -> http_responses_total{status="5xx"} sau similar
+
 -----
 
-R => Query‑uri pentru Grafana
+Query‑uri pentru Grafana
 ```
 Request rate:
 sum(rate(http_requests_total[1m]))
 ```
 -----
 
-R => p95 latency:
+p95 latency:
 ```
 histogram_quantile(
   0.95,
@@ -24,7 +25,7 @@ histogram_quantile(
 ```
 -----
 
-R => Error rate:
+Error rate:
 ```sum(rate(http_responses_total{status_code=~"5.."}[1m]))```
 
 -----
@@ -32,7 +33,9 @@ R => Error rate:
 
 Alertă p95 > 800ms timp de 5 minute
 În Grafana (Alerting):
--> Query: p95 latency (cel de mai sus)
--> Condition: WHEN last() OF query > 0.8
--> For: 5m
--> Severity: critical
+```
+Query: p95 latency (cel de mai sus)
+Condition: WHEN last() OF query > 0.8
+For: 5m
+Severity: critical
+```

@@ -17,7 +17,7 @@ export async function loggingMiddleware(req, reply) {
 ```
 ---
 
-Explicație
-Măsoară timpul de execuție.
-Loghează metoda + URL + durată.
-Ajută la înțelegerea fluxului request -> response.
+Explicație: 
+- Măsoară timpul de execuție.
+- Loghează metoda + URL + durată.
+- Ajută la înțelegerea fluxului request -> response.

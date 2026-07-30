@@ -3,7 +3,7 @@ Cerință: Simulează 3 IP-uri diferite pentru aceeași cheie API.
 
 -----
 
-R => Logica anti-scraping
+Logica anti-scraping
 ```
 // src/rateLimiter/ipDetection.ts
 import { redis } from "../redis";
@@ -25,7 +25,7 @@ export async function detectMultipleIPs(apiKey: string, ip: string) {
 -----
 
 
-R => Integrare în endpoint
+Integrare în endpoint
 ```
 const ip = req.ip;
 const suspicious = await detectMultipleIPs(apiKey, ip);
@@ -37,7 +37,7 @@ if (suspicious) {
 -----
 
 
-R =>  Simulare 3 IP-uri
+Simulare 3 IP-uri
 ```
 curl -H "x-api-key: test" --interface 192.168.0.10 http://localhost:3000/test-rate
 curl -H "x-api-key: test" --interface 192.168.0.11 http://localhost:3000/test-rate
@@ -46,6 +46,6 @@ curl -H "x-api-key: test" --interface 192.168.0.12 http://localhost:3000/test-ra
 -----
 
 
-R => Rezultat
-Redis detectează 3 IP-uri
-La al 4-lea IP → alarmă anti-scraping
+Rezultat: 
+- Redis detectează 3 IP-uri
+- La al 4-lea IP → alarmă anti-scraping

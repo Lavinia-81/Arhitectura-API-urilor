@@ -2,7 +2,7 @@ Ex5 — API complet: Fastify + Prisma + PostgreSQL
 
 -----
 
-R => Structura pe straturi
+Structura pe straturi
 ```
 src/
   controllers/
@@ -14,7 +14,7 @@ src/
 ```
 -----
 
-R => Repository — works.repository.ts
+Repository — works.repository.ts
 ```
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
@@ -39,7 +39,7 @@ export const WorksRepository = {
 ```
 -----
 
-R => Service — works.service.ts
+Service — works.service.ts
 ```
 import { WorksRepository } from "../repositories/works.repository";
 import { ApiError } from "../errors/api.error";
@@ -61,7 +61,7 @@ export const WorksService = {
 ```
 -----
 
-R => Controller — works.controller.ts
+Controller — works.controller.ts
 ```
 import { WorksService } from "../services/works.service";
 
@@ -77,7 +77,7 @@ export async function createWork(req, reply) {
 ```
 -----
 
-R => Routes — works.routes.ts
+Routes — works.routes.ts
 ```
 export default async function (app) {
   app.get("/works", async () => WorksRepository.findAll());
@@ -89,14 +89,14 @@ export default async function (app) {
 ```
 -----
 
-R => Loguri structurate cu Pino
+Loguri structurate cu Pino
 ```
 import Fastify from "fastify";
 const app = Fastify({ logger: true });
 ```
 -----
 
-R => Cache Redis pentru GET /works/:id
+Cache Redis pentru GET /works/:id
 ```
 import { getCachedOrFetch } from "../cache/redis";
 export async function getWorkById(req, reply) {

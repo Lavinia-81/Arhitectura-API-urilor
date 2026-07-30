@@ -2,7 +2,7 @@ Ex1. Pino + middleware de logging
 
 -----
 
-R => Configurare Pino în Fastify
+Configurare Pino în Fastify
 ```
 // src/index.ts
 import Fastify from "fastify";
@@ -12,7 +12,7 @@ const app = Fastify({
 ```
 -----
 
-R => Middleware care loghează request_id, metodă, path, status, durată
+Middleware care loghează request_id, metodă, path, status, durată
 ```
 // src/middlewares/request-logging.ts
 export async function requestLogging(app) {

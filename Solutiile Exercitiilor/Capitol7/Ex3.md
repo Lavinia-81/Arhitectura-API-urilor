@@ -3,7 +3,7 @@ Cerință: RateLimit-Policy, RateLimit-Remaining, RateLimit-Reset, X-RateLimit-P
 
 -----
 
-R => Soluție
+Soluție
 ```
 reply.header("RateLimit-Policy", `${ratePlans[plan].rpm};w=60`);
 reply.header("RateLimit-Remaining", result.remaining);
@@ -12,7 +12,7 @@ reply.header("X-RateLimit-Plan", plan);
 ```
 -----
 
-R => Test cu curl
+Test cu curl
 ```curl -v http://localhost:3000/test-rate```
 
 Output:

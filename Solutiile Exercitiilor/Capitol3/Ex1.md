@@ -29,7 +29,8 @@ src/
 ---
 
 Explicație
-controllers → subțiri, doar orchestrare
+```
+controllers → doar orchestrare
 services → logică de business
 repositories → acces la date (mock / DB)
 middlewares → logging, auth, rate limiting
@@ -37,3 +38,4 @@ validators → Zod / schema custom
 errors → handler centralizat + clase de erori
 routes → definirea rutelor
 utils → funcții auxiliare
+```

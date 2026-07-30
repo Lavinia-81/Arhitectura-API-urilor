@@ -2,7 +2,7 @@ Ex3. OpenTelemetry + Jaeger local
 
 -----
 
-R => Instalare pachete de bază
+Instalare pachete de bază
 ```
 npm install @opentelemetry/api @opentelemetry/sdk-node \
   @opentelemetry/auto-instrumentations-node \
@@ -10,7 +10,7 @@ npm install @opentelemetry/api @opentelemetry/sdk-node \
 ```
 -----
 
-R => Configurare OpenTelemetry
+Configurare OpenTelemetry
 ```
 // src/otel.ts
 import { NodeSDK } from "@opentelemetry/sdk-node";
@@ -29,14 +29,14 @@ sdk.start();
 ```
 -----
 
-R => În index.ts:
+În index.ts:
 ```
 import { sdk } from "./otel";
 // apoi pornești Fastify
 ```
 -----
 
-R => Rulezi Jaeger local (Docker):
+Rulezi Jaeger local (Docker):
 ```
 docker run -d --name jaeger \
   -p 16686:16686 -p 14268:14268 \

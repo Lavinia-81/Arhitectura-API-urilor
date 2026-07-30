@@ -3,7 +3,7 @@ Cerință: Aplică algoritmul într-un endpoint și rulează 100 cereri.
 
 -----
 
-R => Implementare Token Bucket
+Implementare Token Bucket
 ```
 // src/rateLimiter/tokenBucket.ts
 import { redis } from "../redis";
@@ -29,7 +29,7 @@ export async function tokenBucket(apiKey: string, plan: keyof typeof ratePlans) 
 -----
 
 
-R => Endpoint de test
+Endpoint de test
 ```
 // src/routes/testRate.ts
 app.get("/test-rate", async (req, reply) => {
@@ -47,9 +47,9 @@ app.get("/test-rate", async (req, reply) => {
 -----
 
 
-R => Test cu 100 cereri
+Test cu 100 cereri
 ```for i in {1..100}; do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000/test-rate; done```
 
 Rezultat tipic pentru FREE:
-primele ~10 cereri → 200
-restul → 429
+- primele ~10 cereri → 200
+- restul → 429

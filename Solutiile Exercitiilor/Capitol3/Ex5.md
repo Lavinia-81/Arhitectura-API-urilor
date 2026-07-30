@@ -20,7 +20,7 @@ export function errorHandler(error, req, reply) {
 ```
 -----
 
--> Exemplu de clasă de eroare
+Exemplu de clasă de eroare
 ```
 // src/errors/api.error.ts
 export class ApiError extends Error {
@@ -33,8 +33,8 @@ export class ApiError extends Error {
 ```
 -----
 
-Explicație
-Toate erorile sunt transformate în JSON coerent.
-Cod HTTP corect.
-Obiect error clar, standardizat.
-Integrare perfectă cu middleware-ul de logging.
+Explicație: 
+- Toate erorile sunt transformate în JSON coerent.
+- Cod HTTP corect.
+- Obiect error clar, standardizat.
+- Integrare perfectă cu middleware-ul de logging.

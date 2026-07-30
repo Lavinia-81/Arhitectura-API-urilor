@@ -2,7 +2,7 @@ Ex2 — Prima bază de date cu Prisma + PostgreSQL
 
 -----
 
-R1. Instalare Prisma
+1. Instalare Prisma
 ```
 npm install prisma --save-dev
 npm install @prisma/client
@@ -10,11 +10,12 @@ npx prisma init
 ```
 -----
 
-R2. .env
+2. .env
 ```DATABASE_URL="postgresql://postgres:password@localhost:5432/poezii-api"```
+
 -----
 
-R3. prisma/schema.prisma
+3. prisma/schema.prisma
 ```
 model Work {
   id     String @id @default(uuid())
@@ -26,16 +27,18 @@ model Work {
 -----
 
 
-R4. Migrare
+4. Migrare
 ```npx prisma migrate dev --name init```
+
 -----
 
 
-R5. Generare client
+5. Generare client
 ```npx prisma generate```
+
 -----
 
-R6. Script de test — scripts/test-db.ts
+6. Script de test — scripts/test-db.ts
 ```
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();

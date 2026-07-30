@@ -3,7 +3,7 @@ Cerință: Desenează schema paginilor și funcțiilor.
 
 -----
 
-R => Structură profesionistă
+Structură profesionistă
 ```
 Developer Portal
 │
@@ -41,9 +41,9 @@ Developer Portal
 ```
 
 Funcții oferite utilizatorului
--> generare și management API Keys
--> vizualizare usage în timp real
--> upgrade plan
--> acces la documentație completă
--> testare API direct din browser
--> suport tehnic și status operational
+- generare și management API Keys
+- vizualizare usage în timp real
+- upgrade plan
+- acces la documentație completă
+- testare API direct din browser
+- suport tehnic și status operational

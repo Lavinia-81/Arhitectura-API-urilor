@@ -3,7 +3,7 @@ Cerință: rpm, burst, daily, monthly pentru FREE, BASIC, PRO.
 
 -----
 
-R => Soluție profesională
+Soluție profesională
 ```
 // src/ratePlans.ts
 export const ratePlans = {
@@ -29,6 +29,6 @@ export const ratePlans = {
 ```
 
 Explicație
-rpm = limita de bază
-burst = câte cereri instantanee sunt permise
-daily / monthly = protecție anti-abuz pe termen lung
+- rpm = limita de bază
+- burst = câte cereri instantanee sunt permise
+- daily / monthly = protecție anti-abuz pe termen lung

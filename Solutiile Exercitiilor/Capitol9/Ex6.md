@@ -1,22 +1,25 @@
 Ex6. Adaugă full‑text search în limba română
+
 -----
 
-R => 1. Activezi dicționarul românesc
+1. Activezi dicționarul românesc
 ```CREATE EXTENSION IF NOT EXISTS unaccent;```
+
 -----
 
-R => 2. Adaugi coloană tsvector
+2. Adaugi coloană tsvector
 ```ALTER TABLE work ADD COLUMN search tsvector;```
+
 -----
 
-R => 3. Populezi câmpul
+3. Populezi câmpul
 ```
 UPDATE work
 SET search = to_tsvector('romanian', unaccent(title || ' ' || author));
 ```
 -----
 
-R => 4. Trigger automat
+4. Trigger automat
 ```
 CREATE FUNCTION work_search_update() RETURNS trigger AS $$
 
@@ -33,7 +36,7 @@ FOR EACH ROW EXECUTE FUNCTION work_search_update();
 ```
 -----
 
-R => 5. Query full‑text
+5. Query full‑text
 ```
 SELECT *
 FROM work

@@ -2,16 +2,16 @@ Ex5. Simulează un incident real
 
 -----
 
-R =>  Scenariu: baza de date pică
+Scenariu: baza de date pică
 
-1️ -> Oprești PostgreSQL  Local:
+1️. Oprești PostgreSQL  Local:
 ```
 sudo systemctl stop postgresql
 Cloud (Neon / Render / Railway): Stop DB Instance
 ```
 -----
 
-2️ -> Verifici comportamentul API-ului
+2️. Verifici comportamentul API-ului
 Exemplu:
 ```curl http://localhost:3000/works```
 
@@ -27,18 +27,18 @@ Răspuns tipic:
 ```
 -----
 
-3️ -> Analizezi logurile
+3️. Analizezi logurile
 Fastify + Pino:
 ```[error] DB connection failed: ECONNREFUSED```
 
 -----
 
-4️ -> Repornești baza de date
+4️. Repornești baza de date
 ```sudo systemctl start postgresql```
 
 -----
 
-5️ -> Verifici dacă API-ul își revine
+5️. Verifici dacă API-ul își revine
 ```curl http://localhost:3000/works```
 
 Dacă răspunde normal → sistemul tău se autoreface corect.

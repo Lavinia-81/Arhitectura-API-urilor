@@ -2,10 +2,10 @@ Ex3. Configurează uptime monitoring (Better Stack / UptimeRobot)
 
 -----
 
-R => Better Stack (recomandat)
+Better Stack (recomandat)
 ```https://betterstack.com```
 
-1️ -> Creezi monitor nou
+1️. Creezi monitor nou
 ```
 URL: https://poezii-api.com/health
 Interval: 5 minute
@@ -14,7 +14,7 @@ Timeout: 10 secunde
 -----
 
 
-2️ -> Activezi notificările
+2️. Activezi notificările
 ```
 Email
 SMS
@@ -25,7 +25,7 @@ Telegram
 -----
 
 
-3️ -> Trimiți un test alert
+3️. Trimiți un test alert
 Better Stack are buton: Send test alert.
 
 -----

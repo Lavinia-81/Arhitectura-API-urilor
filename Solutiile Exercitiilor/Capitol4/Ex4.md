@@ -1,7 +1,7 @@
 Ex4 — Benchmark: Express vs Fastify
 
 -----
-R1. Server Express
+1. Server Express
 ```
 import express from "express";
 const app = express();
@@ -11,7 +11,7 @@ app.listen(3001);
 -----
 
 
-R2. Server Fastify
+2. Server Fastify
 ```
 import Fastify from "fastify";
 const app = Fastify();
@@ -21,7 +21,7 @@ app.listen({ port: 3002 });
 -----
 
 
-R3. Benchmark cu autocannon
+3. Benchmark cu autocannon
 ```
 autocannon http://localhost:3001/ping
 autocannon http://localhost:3002/ping
@@ -29,7 +29,7 @@ autocannon http://localhost:3002/ping
 -----
 
 
-R4. Rezultate tipice
+4. Rezultate tipice
 ```
 Server	  req/s (aprox)	   Latency	      CPU
 Express	   15k–20k	       mai mare	     mai mare
