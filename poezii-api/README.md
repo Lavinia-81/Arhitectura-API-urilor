@@ -10,11 +10,13 @@ Acest API oferă acces la poezii, autori, căutare full‑text, planuri de acces
 Proiectul este realizat cu Fastify + TypeScript, include rate limiting inteligent, Redis, Prisma, JWT, logging profesional, documentație Swagger/Redoc, și respectă bunele practici prezentate în carte.
 
 ---
-### 📘 Cartea oficială
+
+### Cartea oficială
 
 **[ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE]
 [![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S) 
 Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
+
 ---
 
 ##  Obiectivul proiectului

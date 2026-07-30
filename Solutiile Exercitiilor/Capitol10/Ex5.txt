@@ -1,0 +1,34 @@
+Ex5. Post‑mortem fictiv — incident DB supraîncărcată
+
+-----
+
+Exemplu de post‑mortem
+Titlu: Incident – Baza de date supraîncărcată, degradare API
+
+Data: 30 iulie 2026
+Durată: 14:05–14:42 (37 minute)
+
+Timeline:
+14:05 – Creștere bruscă a latenței p95 peste 1.2s
+14:08 – Alertă Grafana: p95 > 800ms timp de 5 minute
+14:10 – Observăm spike de request rate pe endpointul /v1/works (trafic neobișnuit)
+14:15 – DB PostgreSQL atinge 100% CPU, queue de conexiuni în creștere
+14:20 – Încep să apară erori 500 și timeouts în API
+14:30 – Limităm traficul prin rate limiting și blocăm IP‑urile suspecte
+14:35 – Scalăm vertical DB (mai mult CPU) și optimizăm un query full‑text
+14:42 – Latența revine la valori normale, error rate scade sub 1%
+
+Cauza principală:
+Query full‑text neindexat pe tabela works, combinat cu un spike de trafic (scraping) pe endpointul de căutare.
+Lipsă limită de rate pe endpointul respectiv.
+Acțiuni de remediere:
+Adăugare index full‑text dedicat pentru câmpurile folosite în căutare.
+Activare rate limiting strict pe /v1/fulltext.
+Adăugare WAF rule cu JS Challenge pentru trafic intens pe căutare.
+Adăugare dashboard dedicat pentru load DB (CPU, conexiuni, slow queries).
+Documentarea incidentului și includerea lui în playbookul de on‑call.
+
+Lecții învățate:
+Observabilitatea fără alerte bine gândite nu e suficientă.
+Endpointurile de căutare sunt magnet pentru scraping și trebuie protejate din start.
+Indexarea corectă și rate limiting sunt esențiale pentru stabilitatea DB.

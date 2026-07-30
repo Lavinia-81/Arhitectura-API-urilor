@@ -1,0 +1,45 @@
+Ex5. Detectare IP-uri multiple — anti-scraping
+Cerință: Simulează 3 IP-uri diferite pentru aceeași cheie API.
+
+-----
+
+R => Logica anti-scraping
+// src/rateLimiter/ipDetection.ts
+import { redis } from "../redis";
+export async function detectMultipleIPs(apiKey: string, ip: string) {
+  const key = `ips:${apiKey}`;
+  await redis.sadd(key, ip);
+  const count = await redis.scard(key);
+
+  if (count > 3) {
+    console.warn(`ALERT: API key ${apiKey} used from ${count} IPs`);
+    return true;
+  }
+  return false;
+}
+
+-----
+
+
+R => Integrare în endpoint
+const ip = req.ip;
+const suspicious = await detectMultipleIPs(apiKey, ip);
+
+if (suspicious) {
+  reply.header("X-Scraping-Alert", "true");
+}
+
+-----
+
+
+R =>  Simulare 3 IP-uri
+curl -H "x-api-key: test" --interface 192.168.0.10 http://localhost:3000/test-rate
+curl -H "x-api-key: test" --interface 192.168.0.11 http://localhost:3000/test-rate
+curl -H "x-api-key: test" --interface 192.168.0.12 http://localhost:3000/test-rate
+
+-----
+
+
+R => Rezultat
+Redis detectează 3 IP-uri
+La al 4-lea IP → alarmă anti-scraping
