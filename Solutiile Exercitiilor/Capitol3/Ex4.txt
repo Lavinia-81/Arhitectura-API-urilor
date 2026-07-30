@@ -1,0 +1,23 @@
+Ex4. Middleware de logging
+Cerință: Loghează metoda, URL-ul, timpul de execuție.
+
+-----
+
+Soluție (Fastify middleware)
+
+// src/middlewares/logging.middleware.ts
+export async function loggingMiddleware(req, reply) {
+  const start = Date.now();
+
+  reply.addHook("onSend", async () => {
+    const duration = Date.now() - start;
+    console.log(`[${req.method}] ${req.url} - ${duration}ms`);
+  });
+}
+
+-----
+
+Explicație
+Măsoară timpul de execuție.
+Loghează metoda + URL + durată.
+Ajută la înțelegerea fluxului request -> response.

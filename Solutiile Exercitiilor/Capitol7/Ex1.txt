@@ -1,0 +1,37 @@
+Ex1. Definește planurile comerciale — ratePlans.ts
+Cerință: rpm, burst, daily, monthly pentru FREE, BASIC, PRO.
+
+
+-----
+
+
+R => Soluție profesională
+
+// src/ratePlans.ts
+export const ratePlans = {
+  FREE: {
+    rpm: 60,          // requests per minute
+    burst: 10,        // maxim instant
+    daily: 2000,
+    monthly: 30000
+  },
+  BASIC: {
+    rpm: 300,
+    burst: 50,
+    daily: 10000,
+    monthly: 300000
+  },
+  PRO: {
+    rpm: 1000,
+    burst: 200,
+    daily: 50000,
+    monthly: 1500000
+  }
+};
+
+-----
+
+Explicație
+rpm = limita de bază
+burst = câte cereri instantanee sunt permise
+daily / monthly = protecție anti-abuz pe termen lung
