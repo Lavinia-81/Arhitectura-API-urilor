@@ -1,0 +1,11 @@
+Ex2. Privilegii minime — user DB cu doar CRUD
+
+-----
+
+User cu privilegii limitate (PostgreSQL)
+```
+CREATE USER app_user WITH PASSWORD 'strong_password';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
+```
+-> aplicația folosește app_user în DATABASE_URL
+-> migrațiile Prisma (sau alte tool‑uri) vor eșua, pentru că au nevoie de CREATE TABLE, ALTER TABLE etc.

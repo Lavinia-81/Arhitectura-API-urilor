@@ -109,11 +109,11 @@ Retry-After (doar la 429)
 
 ```
 # Healthcheck
-`GET /health`
+GET /health
 
 # API Keys
-POST /v1/api-keys` — generează o cheie API
-GET /v1/api-keys` — listează cheile API ale utilizatorului
+POST /v1/api-keys — generează o cheie API
+GET /v1/api-keys — listează cheile API ale utilizatorului
 
 ```
 
@@ -121,7 +121,8 @@ GET /v1/api-keys` — listează cheile API ale utilizatorului
 
 ## Autori
 
-```GET /v1/authors` — listă autori
+```
+GET /v1/authors — listă autori
 GET /v1/authors/{id} - Obținerea unui Autor după ID
 GET /v1/authors?page=1&limit=20 - Listarea Autorilo
 GET /v1/authors/slug/{slug} - Obținerea unui Autor după Slug
@@ -166,7 +167,7 @@ DELETE /v1/poems/{id} - Ștergere poezie
   }
   ```
 
-  ---
+---
 
 ## Status Codes
 ```

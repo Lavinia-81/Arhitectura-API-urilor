@@ -1,7 +1,5 @@
 # ARHITECTURA ȘI SECURITATEA API-URILOR MODERNE — Repository Oficial
-Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
-[![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 
 Bun venit în repository-ul oficial al cărții „ARHITECTURA ȘI SECURITATEA API-URILOR MODERNE”, o lucrare tehnică dedicată dezvoltatorilor, arhitecților software și tuturor celor interesați de construcția, optimizarea și securizarea API-urilor moderne.
 
@@ -12,6 +10,13 @@ Acest repository servește ca material complementar pentru carte, oferind acces 
 - resurse vizuale și tehnice care ajută la înțelegerea arhitecturii unui API modern
 
 Repository-ul este structurat editorial, clar și intuitiv, pentru a reflecta calitatea și rigoarea lucrării.
+
+---
+
+### Cartea oficială
+**ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE**
+[![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S) 
+Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
 
 ---
 

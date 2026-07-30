@@ -1,0 +1,39 @@
+Ex3. Pipeline GitHub Actions — test + deploy pe Render/Railway
+
+-----
+
+R => Fișier: .github/workflows/deploy.yml
+```
+name: CI/CD
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm install
+        
+      - name: Run tests
+        run: npm test
+        
+      - name: Deploy to Render
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+```
+
+Explicație:
+-> rulează testele la fiecare push
+-> dacă push-ul este pe main, trimite un webhook către Render
+-> Render face deploy automat
