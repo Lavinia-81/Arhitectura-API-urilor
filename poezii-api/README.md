@@ -41,49 +41,101 @@ Securitate: JWT, API Keys, limitări pe planuri, protecție la abuz
 
 ---
 
-## Instalare
+## Tehnologii folosite
+```
+Backend
+Fastify — framework rapid, modern, cu plugin‑uri și sistem de hooks performant.
+TypeScript — tipare stricte, siguranță la runtime, claritate în arhitectură.
+Prisma ORM — acces elegant la PostgreSQL, migrații, modele, validări.
+Redis — rate limiting, caching, monitorizare consum.
+JWT — autentificare pentru rutele administrative.
+Swagger + Redoc — documentație completă, generată automat.
+OpenTelemetry — tracing pentru debugging și observabilitate.
+Pino Logger — logging profesional, performant.
+```
+---
 
-Instalare dependințe:
-`npm install`
+## Structura proiectului
+```
+src/
+ ├── controllers/      # Logica endpointurilor
+ ├── routes/           # Definirea rutelor (v1, admin, usage)
+ ├── services/         # Servicii (autori, poezii, API keys)
+ ├── utils/            # Prisma, logger, rate limiting, validări
+ ├── middlewares/      # Autentificare, API key parsing
+ ├── config/           # Rate limits, env, swagger config
+ └── index.ts          # Bootstrap Fastify + plugin-uri
+```
+---
 
-## Configurare
-Creează un fișier .env în rădăcina proiectului:
+## După clonarea proiectului (obligatoriu)
+După clonarea repository‑ului, fiecare utilizator trebuie să instaleze local toate dependințele necesare pentru rularea API‑ului.
+Acest pas este obligatoriu deoarece proiectul folosește Fastify, TypeScript, Prisma, Redis, OpenTelemetry, Pino și alte module definite în package.json.
 
 ```
-PORT=3000
-NODE_ENV=development
+### Clonarea proiectului
+git clone https://github.com/.../poezii-api.git
+cd poezii-api
 
-# Redis
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
-
-# JWT / API Keys
-JWT_SECRET=un_secret_puternic_aici
+### Instalarea dependințelor
+npm install
 ```
+Acest pas:
+- descarcă și instalează toate modulele Node.js necesare
+- configurează Fastify și plugin‑urile sale
+- instalează Prisma ORM și generatorul de client
+- instalează clientul Redis
+- instalează TypeScript și compilatorul
+- pregătește mediul pentru rularea API‑ului
+Fără instalarea dependințelor, serverul nu poate porni, deoarece codul se bazează pe aceste module pentru routing, ORM, caching, rate limiting, logging și documentație.
 
 ---
 
-## Rulare
-
-- Mod dezvoltare:
-  `npm run dev`
-
-- Mod producție:
-
+## După instalarea dependințelor
+După npm install, fiecare utilizator trebuie să:
 ```
-npm run build
-npm start
+### Configureze fișierul .env
+cp .env.example .env
+și să completeze valorile necesare (PostgreSQL, Redis, JWT etc.).
+
+### Pornească serviciile externe
+PostgreSQL (baza de date)
+
+Redis (rate limiting + caching)
+
+### Ruleze migrațiile Prisma
+npx prisma migrate dev
+
+### Ruleze serverul
+npm run dev
+```
+
+## Configurare .env
+```
+### Creează un fișier .env în rădăcina proiectului:
+PORT=3000
+NODE_ENV=development
+
+### PostgreSQL
+DATABASE_URL="postgresql://postgres:password@localhost:5432/poezii"
+
+### Redis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+
+### JWT / API Keys
+JWT_SECRET=un_secret_puternic_aici
+
 ```
 
 ---
 
 ## Autentificare
-
-API-ul folosește chei API transmise în header:
+```
+### API-ul folosește chei API transmise în header:
 `x-api-key: YOUR_API_KEY`
 
-Planurile disponibile:
-```
+### Planurile disponibile:
 FREE — limită redusă
 
 PRO — limită extinsă
@@ -126,6 +178,8 @@ GET /v1/authors — listă autori
 GET /v1/authors/{id} - Obținerea unui Autor după ID
 GET /v1/authors?page=1&limit=20 - Listarea Autorilo
 GET /v1/authors/slug/{slug} - Obținerea unui Autor după Slug
+GET /v1/authors/{id}/poems
+GET /v1/authors/{id}/poems/popular
 ```
 
 ---
@@ -156,8 +210,9 @@ DELETE /v1/poems/{id} - Ștergere poezie
 ## Usage (monitorizare consum)
   `GET /v1/usage`
 
- Exemplu răspuns:
- ```{
+ ### Exemplu răspuns:
+ ```
+ {
   "plan": "PRO",
   "limit": 500,
   "used": 123,
@@ -165,11 +220,11 @@ DELETE /v1/poems/{id} - Ștergere poezie
   "resetIn": 42,
   "blocked": false
   }
-  ```
 
+```
 ---
 
-## Status Codes
+### Status Codes
 ```
 200 — OK
 400 — Invalid request

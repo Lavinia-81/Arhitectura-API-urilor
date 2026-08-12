@@ -1,10 +1,14 @@
 // src/index.ts
+import dotenv from 'dotenv'
+dotenv.config() // Încarcă variabilele de mediu din .env
 import './tracing.js' // Inițializare tracing (OpenTelemetry)
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
 import * as crypto from 'node:crypto'
 import { metricsEndpoint, httpRequestsTotal, httpRequestDuration } from './utils/metrics.js'
+import fastifyStatic from '@fastify/static'
+import path from 'path'
 
 import { logger, loggerConfig } from './utils/logger.js'
 import { prisma } from './utils/prisma.js'
@@ -73,35 +77,35 @@ const initializeApp = async () => {
       info: {
         title: 'Poezii API',
         description: `
-API cultural dedicat literaturii române - poezii, autori, texte integrale.
+            API cultural dedicat literaturii române - poezii, autori, texte integrale.
 
-## Autentificare
-Pentru a accesa API-ul, includeți header-ul \`x-api-key\` cu o cheie validă.
+            ## Autentificare
+            Pentru a accesa API-ul, includeți header-ul \`x-api-key\` cu o cheie validă.
 
-## Planuri
-- **FREE**: 100 de cereri pe minut, fără acces la textul integral al poeziilor
-- **PRO**: 1000 de cereri pe minut, acces complet la toate resursele, inclusiv texte integrale
-- **ENTERPRISE**: 10000 de cereri pe minut, suport dedicat și SLA 
+            ## Planuri
+            - **FREE**: 100 de cereri pe minut, fără acces la textul integral al poeziilor
+            - **PRO**: 1000 de cereri pe minut, acces complet la toate resursele, inclusiv texte integrale
+            - **ENTERPRISE**: 10000 de cereri pe minut, suport dedicat și SLA 
 
-## Rate Limiting
-- FREE: 100 requests / minute
-- PRO: 1000 requests / minute
-- ENTERPRISE: 10000 requests / minute
+            ## Rate Limiting
+            - FREE: 100 requests / minute
+            - PRO: 1000 requests / minute
+            - ENTERPRISE: 10000 requests / minute
 
-## Coduri de răspuns comune
-- \`200 OK\` – cerere procesată cu succes
-- \`201 Created\` – resursă creată cu succes
-- \`204 No Content\` – resursă ștearsă cu succes
-- \`400 Bad Request\` – date de intrare invalide
-- \`401 Unauthorized\` – cheie API lipsă sau invalidă
-- \`403 Forbidden\` – acces interzis (plan insuficient)
-- \`404 Not Found\` – resursă negăsită
-- \`429 Too Many Requests\` – limită de cereri depășită
-- \`500 Internal Server Error\` – eroare internă
-      `,
+            ## Coduri de răspuns comune
+            - \`200 OK\` – cerere procesată cu succes
+            - \`201 Created\` – resursă creată cu succes
+            - \`204 No Content\` – resursă ștearsă cu succes
+            - \`400 Bad Request\` – date de intrare invalide
+            - \`401 Unauthorized\` – cheie API lipsă sau invalidă
+            - \`403 Forbidden\` – acces interzis (plan insuficient)
+            - \`404 Not Found\` – resursă negăsită
+            - \`429 Too Many Requests\` – limită de cereri depășită
+            - \`500 Internal Server Error\` – eroare internă
+        `,
         version: '1.0.0',
         contact: {
-          name: 'Echipa Poezii API',
+          name: 'Poezii API',
           email: 'support@poezii-api.ro',
         },
         license: {
@@ -114,7 +118,7 @@ Pentru a accesa API-ul, includeți header-ul \`x-api-key\` cu o cheie validă.
           description: 'Server de dezvoltare',
         },
         {
-          // url: 'https://api.poezii.ro/v1',
+          url: 'https://api.poezii.ro/v1',
           description: 'Server de producție',
         },
       ],
@@ -128,11 +132,7 @@ Pentru a accesa API-ul, includeți header-ul \`x-api-key\` cu o cheie validă.
           },
         },
       },
-      security: [
-        {
-          apiKey: [],
-        },
-      ],
+      security: [],
      
       tags: [
         { name: 'Health', description: 'Endpoint-uri pentru verificarea stării API-ului' },
@@ -158,20 +158,36 @@ Pentru a accesa API-ul, includeți header-ul \`x-api-key\` cu o cheie validă.
     staticCSP: false,
     transformStaticCSP: (header) => header,
   })
+  
+  await app.register(fastifyStatic, {
+    root: path.join(process.cwd()),
+    prefix: '/redoc',
+  })
 
   await app.register(usageRoutes, { prefix: '/v1' })
   await app.register(v1Routes, { prefix: '/v1' })
 
+app.get('/redoc', async (req, reply) => {
+  return reply.redirect('/redoc/redoc.html')
+})
+
 
 app.addHook('preHandler', async (request, reply) => {
   const publicRoutes = [
-    '/health',
-    '/ping',
-    '/v1/api-keys',
-    '/api-keys'
-  ]
+      '/v1/health',
+      '/v1/ping',
+      '/v1/api-keys',
+      '/docs',
+      '/v1/docs',
+      '/docs/json',
+      '/swagger',
+      '/v1/swagger',
+      '/redoc',
+      '/redoc/redoc.html',
+      '/v1/ping'
+    ]
 
-  const path = request.raw.url?.split('?')[0] || ''
+  const path = request.raw.url?.split('?')[0].replace(/\/+$/, '') || ''
 
   if (publicRoutes.includes(path)) {
     return
@@ -214,11 +230,12 @@ app.addHook('preHandler', async (request, reply) => {
   }
 })
 
+
 app.addHook('preHandler', rateLimiterMiddleware)
 setupErrorHandler(app)
 
 // Endpoint public simplu (pentru testare rapidă)
-app.get('/ping', async () => {
+app.get('/v1/ping', async () => {
   return { pong: true, timestamp: new Date().toISOString() }
 })
 
@@ -240,7 +257,7 @@ const start = async () => {
       host,
       env: process.env.NODE_ENV,
       pid: process.pid,
-    }, `Poezii API rulează la http://${host}:${port}`)
+    }, `Poezii API ruleaza la http://${host}:${port}`)
     
     // Afișăm rutele disponibile (doar în development)
     if (process.env.NODE_ENV === 'development') {
