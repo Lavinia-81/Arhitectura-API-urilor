@@ -2,7 +2,7 @@ Ex1 — Primul endpoint cu Fastify și TypeScript
 
 -----
 
-R1. Inițializare proiect
+1. Inițializare proiect
 ```
 mkdir fastify-api
 cd fastify-api
@@ -12,7 +12,7 @@ npm install fastify typescript ts-node-dev @types/node
 -----
 
 
-R2. tsconfig.json (strict mode activat)
+2. tsconfig.json (strict mode activat)
 ```
 {
   "compilerOptions": {
@@ -28,7 +28,7 @@ R2. tsconfig.json (strict mode activat)
 -----
 
 
-R3. src/index.ts
+3. src/index.ts
 ```
 import Fastify from "fastify";
 const app = Fastify();
@@ -43,13 +43,12 @@ app.listen({ port: 3000 }).then(() => {
 -----
 
 
-R4. Rulezi serverul
+4. Rulezi serverul
 ```npx ts-node-dev src/index.ts```
 
 -----
 
 
-R5. Test
+5. Test
 ```curl http://localhost:3000/health```
 
------

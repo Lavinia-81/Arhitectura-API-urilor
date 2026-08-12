@@ -27,6 +27,6 @@ export async function getWorksController(req, reply) {
 ```
 -----
 
-Explicație
-Controllerul nu conține logică de business.
-Validează input -> trimite către service -> returnează răspuns coerent.
+Explicație:
+- Controllerul nu conține logică de business.
+- Validează input -> trimite către service -> returnează răspuns coerent.

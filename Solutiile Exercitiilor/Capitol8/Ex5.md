@@ -2,7 +2,7 @@ Ex5. Alertă — 429, auth failures, P95 latency
 
 -----
 
-R => Poți implementa cu:
+Poți implementa cu:
 ```
 Better Stack
 Prometheus + Alertmanager

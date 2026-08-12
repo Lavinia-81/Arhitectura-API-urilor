@@ -2,7 +2,7 @@ Ex4. Automatizează un backup — script Bash
 
 -----
 
-R => backup.sh
+backup.sh
 ```
 #!/bin/bash
 
@@ -16,10 +16,10 @@ echo "Backup complet: $FILE"
 ```
 -----
 
-R => Rulezi manual
+Rulezi manual
 ```bash backup.sh```
 
 -----
 
-R => Verifici fișierul
+Verifici fișierul
 ```ls -lh /backups```

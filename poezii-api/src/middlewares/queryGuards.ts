@@ -1,5 +1,6 @@
 // middleware/queryGuard.ts
 export function guardQuery(filters: any) {
+  
   // Limitează paginarea (maxim 100)
   if (filters.limit > 100) {
     throw new Error('Limit cannot exceed 100')

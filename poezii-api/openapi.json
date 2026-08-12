@@ -1,0 +1,1746 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Poezii API",
+    "description": "\n            API cultural dedicat literaturii române - poezii, autori, texte integrale.\n\n            ## Autentificare\n            Pentru a accesa API-ul, includeți header-ul `x-api-key` cu o cheie validă.\n\n            ## Planuri\n            - **FREE**: 100 de cereri pe minut, fără acces la textul integral al poeziilor\n            - **PRO**: 1000 de cereri pe minut, acces complet la toate resursele, inclusiv texte integrale\n            - **ENTERPRISE**: 10000 de cereri pe minut, suport dedicat și SLA \n\n            ## Rate Limiting\n            - FREE: 100 requests / minute\n            - PRO: 1000 requests / minute\n            - ENTERPRISE: 10000 requests / minute\n\n            ## Coduri de răspuns comune\n            - `200 OK` – cerere procesată cu succes\n            - `201 Created` – resursă creată cu succes\n            - `204 No Content` – resursă ștearsă cu succes\n            - `400 Bad Request` – date de intrare invalide\n            - `401 Unauthorized` – cheie API lipsă sau invalidă\n            - `403 Forbidden` – acces interzis (plan insuficient)\n            - `404 Not Found` – resursă negăsită\n            - `429 Too Many Requests` – limită de cereri depășită\n            - `500 Internal Server Error` – eroare internă\n        ",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Poezii API",
+      "email": "support@poezii-api.ro"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "Cheia API obținută de la administrator"
+      }
+    },
+    "schemas": {
+
+    }
+  },
+  "paths": {
+    "/usage": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/poems": {
+      "get": {
+        "summary": "Lista poeziilor",
+        "tags": [
+          "Poems"
+        ],
+        "description": "Obține o listă paginată de poezii cu filtrare, căutare și sortare.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "description": "Caută în titlu sau text"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "authorSlug",
+            "required": false,
+            "description": "Filtrare după autor (slug)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pastel",
+                "baladă",
+                "sonet",
+                "elegie",
+                "meditație",
+                "epigramă"
+              ]
+            },
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "description": "Filtrare după genul poetic"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "in": "query",
+            "name": "yearMin",
+            "required": false,
+            "description": "Anul minim"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "yearMax",
+            "required": false,
+            "description": "Anul maxim"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Numărul paginii"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 100
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Rezultate pe pagină"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "title",
+                "year",
+                "popularity",
+                "createdAt"
+              ],
+              "default": "popularity"
+            },
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "description": "Câmp pentru sortare"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "desc"
+            },
+            "in": "query",
+            "name": "sortOrder",
+            "required": false,
+            "description": "Direcția de sortare"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "in": "query",
+            "name": "includeFullText",
+            "required": false,
+            "description": "Include textul integral (doar PRO)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de poezii returnată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Lista de poezii returnată cu succes",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+
+                      },
+                      "description": "Metadate de paginare"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+
+                      },
+                      "description": "Link-uri HATEOAS"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/poems/popular": {
+      "get": {
+        "summary": "Cele mai populare poezii",
+        "tags": [
+          "Poems"
+        ],
+        "description": "Obține lista celor mai accesate poezii (pentru pagina principală).",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 50
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Numărul de rezultate"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "in": "query",
+            "name": "includeFullText",
+            "required": false,
+            "description": "Include textul integral (doar PRO)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista returnată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Lista returnată cu succes",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/poems/{id}": {
+      "get": {
+        "summary": "Detaliile unei poezii (după ID)",
+        "tags": [
+          "Poems"
+        ],
+        "description": "Obține informațiile complete ale unei poezii folosind ID-ul numeric.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "in": "query",
+            "name": "includeFullText",
+            "required": false,
+            "description": "Include textul integral (doar PRO)"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul numeric al poeziei"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detaliile poeziei",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Detaliile poeziei",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "year": {
+                      "type": "integer"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "string"
+                    },
+                    "fullText": {
+                      "type": "string"
+                    },
+                    "popularity": {
+                      "type": "integer"
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poezia nu a fost găsită",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezia nu a fost găsită",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/poems/slug/{slug}": {
+      "get": {
+        "summary": "Detaliile unei poezii (după slug)",
+        "tags": [
+          "Poems"
+        ],
+        "description": "Obține informațiile complete ale unei poezii folosind slug-ul URL-prietenos.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "in": "query",
+            "name": "includeFullText",
+            "required": false,
+            "description": "Include textul integral (doar PRO)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9\\-]+$"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "description": "Slug-ul poeziei (ex: \"luceafarul\")"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detaliile poeziei",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Detaliile poeziei",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "year": {
+                      "type": "integer"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "string"
+                    },
+                    "fullText": {
+                      "type": "string"
+                    },
+                    "popularity": {
+                      "type": "integer"
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poezia nu a fost găsită",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezia nu a fost găsită",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/poems": {
+      "post": {
+        "summary": "Crează o poezie nouă",
+        "tags": [
+          "Admin"
+        ],
+        "description": "Adaugă o poezie nouă în baza de date. Necesită plan PRO.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "slug",
+                  "authorId"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Titlul poeziei"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9\\-]+$",
+                    "description": "Slug-ul unic"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "pastel",
+                      "baladă",
+                      "sonet",
+                      "elegie",
+                      "meditație",
+                      "epigramă"
+                    ],
+                    "description": "Genul poetic"
+                  },
+                  "year": {
+                    "type": "integer",
+                    "description": "Anul publicării"
+                  },
+                  "summary": {
+                    "type": "string",
+                    "description": "Rezumat sau context"
+                  },
+                  "keywords": {
+                    "type": "string",
+                    "description": "Cuvinte cheie (separate prin virgulă)"
+                  },
+                  "fullText": {
+                    "type": "string",
+                    "description": "Textul integral al poeziei"
+                  },
+                  "authorId": {
+                    "type": "integer",
+                    "description": "ID-ul autorului"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Poezie creată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezie creată cu succes",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "year": {
+                      "type": "integer"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "string"
+                    },
+                    "fullText": {
+                      "type": "string"
+                    },
+                    "authorId": {
+                      "type": "integer"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "selfSlug": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acces interzis (necesită plan PRO)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Acces interzis (necesită plan PRO)",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict – slug-ul există deja",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Conflict – slug-ul există deja",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/poems/{id}": {
+      "put": {
+        "summary": "Actualizează o poezie",
+        "tags": [
+          "Admin"
+        ],
+        "description": "Modifică o poezie existentă. Necesită plan PRO.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9\\-]+$"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "pastel",
+                      "baladă",
+                      "sonet",
+                      "elegie",
+                      "meditație",
+                      "epigramă"
+                    ]
+                  },
+                  "year": {
+                    "type": "integer"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "keywords": {
+                    "type": "string"
+                  },
+                  "fullText": {
+                    "type": "string"
+                  },
+                  "authorId": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul poeziei"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Poezie actualizată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezie actualizată cu succes",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "year": {
+                      "type": "integer"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "string"
+                    },
+                    "fullText": {
+                      "type": "string"
+                    },
+                    "authorId": {
+                      "type": "integer"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "selfSlug": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acces interzis (necesită plan PRO)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Acces interzis (necesită plan PRO)",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poezia nu a fost găsită",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezia nu a fost găsită",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Șterge o poezie",
+        "tags": [
+          "Admin"
+        ],
+        "description": "Elimină o poezie din baza de date. Necesită plan PRO.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul poeziei"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Poezie ștearsă cu succes"
+          },
+          "403": {
+            "description": "Acces interzis (necesită plan PRO)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Acces interzis (necesită plan PRO)",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poezia nu a fost găsită",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poezia nu a fost găsită",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/poems/{id}/text": {
+      "get": {
+        "summary": "Textul integral al unei poezii",
+        "tags": [
+          "Poems"
+        ],
+        "description": "Obține textul integral al unei poezii folosind ID-ul numeric.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul numeric al poeziei"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "fullText": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors": {
+      "get": {
+        "summary": "Lista poeților",
+        "tags": [
+          "Authors"
+        ],
+        "description": "Obține o listă paginată de poeți cu căutare și filtrare după secol.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "description": "Caută în numele poetului"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 21
+            },
+            "in": "query",
+            "name": "century",
+            "required": false,
+            "description": "Filtrare după secol (ex: 19)"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Numărul paginii"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 100
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Rezultate pe pagină"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "birthYear",
+                "deathYear"
+              ],
+              "default": "name"
+            },
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "description": "Câmp pentru sortare"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            },
+            "in": "query",
+            "name": "sortOrder",
+            "required": false,
+            "description": "Direcția de sortare"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de poeți returnată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Lista de poeți returnată cu succes",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "birthYear": {
+                            "type": "integer"
+                          },
+                          "deathYear": {
+                            "type": "integer"
+                          },
+                          "popularity": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "summary": "Detaliile unui poet (după ID)",
+        "tags": [
+          "Authors"
+        ],
+        "description": "Obține informațiile complete ale unui poet folosind ID-ul numeric.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul numeric al poetului"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detaliile poetului",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Detaliile poetului",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "birthYear": {
+                      "type": "integer"
+                    },
+                    "deathYear": {
+                      "type": "integer"
+                    },
+                    "popularity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poetul nu a fost găsit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poetul nu a fost găsit",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/slug/{slug}": {
+      "get": {
+        "summary": "Detaliile unui poet (după slug)",
+        "tags": [
+          "Authors"
+        ],
+        "description": "Obține informațiile complete ale unui poet folosind slug-ul URL-prietenos.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9\\-]+$"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "description": "Slug-ul poetului (ex: \"mihai-eminescu\")"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detaliile poetului",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Detaliile poetului",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "birthYear": {
+                      "type": "integer"
+                    },
+                    "deathYear": {
+                      "type": "integer"
+                    },
+                    "popularity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poetul nu a fost găsit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poetul nu a fost găsit",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{id}/poems": {
+      "get": {
+        "summary": "Poeziile unui poet",
+        "tags": [
+          "Authors"
+        ],
+        "description": "Obține toate poeziile unui poet, cu paginare.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "in": "query",
+            "name": "page",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 100
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "in": "query",
+            "name": "includeFullText",
+            "required": false,
+            "description": "Include textul integral (doar PRO)"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul poetului"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de poezii returnată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Lista de poezii returnată cu succes",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "year": {
+                            "type": "integer"
+                          },
+                          "popularity": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poetul nu a fost găsit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poetul nu a fost găsit",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{id}/poems/popular": {
+      "get": {
+        "summary": "Cele mai populare poezii ale unui poet",
+        "tags": [
+          "Authors"
+        ],
+        "description": "Obține topul poeziilor celui mai citit poet.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "default": 5,
+              "maximum": 20
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Numărul de rezultate"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID-ul poetului"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista returnată cu succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Lista returnată cu succes",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "year": {
+                            "type": "integer"
+                          },
+                          "popularity": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Poetul nu a fost găsit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Poetul nu a fost găsit",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/fulltext": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "in": "query",
+            "name": "text",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "author": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "slug": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Verificarea stării API-ului",
+        "tags": [
+          "Health"
+        ],
+        "description": "Endpoint public pentru monitorizare. Verifică disponibilitatea serverului, bazei de date și Redis.",
+        "responses": {
+          "200": {
+            "description": "Toate serviciile funcționează normal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Toate serviciile funcționează normal",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok",
+                        "degraded",
+                        "down"
+                      ]
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "string"
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "string",
+                          "enum": [
+                            "up",
+                            "down"
+                          ]
+                        },
+                        "redis": {
+                          "type": "string",
+                          "enum": [
+                            "up",
+                            "down"
+                          ]
+                        }
+                      }
+                    },
+                    "responseTimeMs": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unul sau mai multe servicii sunt indisponibile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Unul sau mai multe servicii sunt indisponibile",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "degraded",
+                        "down"
+                      ]
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "string"
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "string",
+                          "enum": [
+                            "up",
+                            "down"
+                          ]
+                        },
+                        "redis": {
+                          "type": "string",
+                          "enum": [
+                            "up",
+                            "down"
+                          ]
+                        }
+                      }
+                    },
+                    "responseTimeMs": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/redoc": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Server de dezvoltare"
+    },
+    {
+      "url": "https://api.poezii.ro/v1",
+      "description": "Server de producție"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Endpoint-uri pentru verificarea stării API-ului"
+    },
+    {
+      "name": "Poems",
+      "description": "Operații cu poezii"
+    },
+    {
+      "name": "Authors",
+      "description": "Operații cu autori"
+    },
+    {
+      "name": "Admin",
+      "description": "Operații administrative (necesită plan PRO)"
+    }
+  ]
+}

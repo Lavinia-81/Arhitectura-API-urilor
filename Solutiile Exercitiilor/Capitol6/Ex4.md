@@ -2,7 +2,7 @@ Ex4. Scrie un Dockerfile și rulează API-ul în container
 
 -----
 
-R => Dockerfile minimal, profesionist
+Dockerfile minimal, profesionist
 ```
 FROM node:18-alpine
 WORKDIR /app
@@ -16,18 +16,18 @@ CMD ["node", "dist/index.js"]
 -----
 
 
-R => Construiești imaginea
+Construiești imaginea
 ```docker build -t poezii-api```
 
 -----
 
 
-R => Rulezi containerul
+Rulezi containerul
 ```docker run -p 3000:3000 poezii-api```
 
 -----
 
-R => Test
+Test
 ```curl http://localhost:3000/health```
 
 -----

@@ -4,6 +4,7 @@ Ex2. Endpoint /metrics cu prom-client + histogram de latență
 
 Instalare
 ```npm install prom-client```
+
 ---
 
 Configurare metrics

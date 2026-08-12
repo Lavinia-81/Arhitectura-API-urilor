@@ -2,12 +2,12 @@ Ex3 — Cache cu Redis
 
 ------
 
-R1. Instalare Redis client
+1. Instalare Redis client
 ```npm install redis```
 
 -----
 
-R2. Conectare Redis
+2. Conectare Redis
 ```
 import { createClient } from "redis";
 
@@ -17,7 +17,7 @@ redis.connect();
 -----
 
 
-R3. Funcția getCachedOrFetch
+3. Funcția getCachedOrFetch
 ```
 export async function getCachedOrFetch(key: string, fetchFunction: () => Promise<any>) {
   const cached = await redis.get(key);
@@ -33,7 +33,7 @@ export async function getCachedOrFetch(key: string, fetchFunction: () => Promise
 -----
 
 
-R4. Test cu simulare lentă
+4. Test cu simulare lentă
 ```
 async function slowFetch() {
   await new Promise(r => setTimeout(r, 1000));
@@ -52,5 +52,5 @@ async function slowFetch() {
 -----
 
 Rezultat:
--> prima execuție: ~1000ms
--> a doua execuție: ~1ms (din cache)
+- prima execuție: ~1000ms
+- a doua execuție: ~1ms (din cache)

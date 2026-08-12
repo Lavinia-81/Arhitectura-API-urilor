@@ -33,5 +33,5 @@ export async function getWorksController(req, reply) {
 ```
 -----
 
--> fiecare utilizator cu altă cheie API → alt _trace
--> watermark discret, dar util pentru tracking.
+- fiecare utilizator cu altă cheie API -> alt _trace
+- watermark discret, dar util pentru tracking.

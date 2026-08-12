@@ -3,11 +3,12 @@ Cerință: Creează un checkout session Stripe.
 
 -----
 
-R => Instalare Stripe
+Instalare Stripe
 ```npm install stripe```
+
 -----
 
-R => Endpoint
+Endpoint
 ```
 // src/controllers/billing.controller.ts
 import Stripe from "stripe";
@@ -31,8 +32,9 @@ export async function subscribeController(req, reply) {
 ```
 -----
 
-R => Test local
+Test local
 ```
 curl -X POST http://localhost:3000/billing/subscribe \
   -H "Content-Type: application/json" \
-  -d '{"plan":"BASIC"}'```
+  -d '{"plan":"BASIC"}'
+```

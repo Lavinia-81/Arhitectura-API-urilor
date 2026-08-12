@@ -9,7 +9,7 @@ GET    /v1/authors
 GET    /v1/loans
 
 
-Explicație
-Nu folosim /borrowBook, /addAuthor, /getBooks.
-Totul este resursă: books, authors, loans.
-Verbele sunt în HTTP, nu în URL.
+Explicație:
+- Nu folosim /borrowBook, /addAuthor, /getBooks.
+- Totul este resursă: books, authors, loans.
+- Verbele sunt în HTTP, nu în URL.

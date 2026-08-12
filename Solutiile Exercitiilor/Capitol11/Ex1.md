@@ -3,7 +3,7 @@ Cerință: Definește limitele de request-uri și rate limit pentru Free, Basic,
 
 -----
 
-R => Fișier: src/billing/plans.ts
+Fișier: src/billing/plans.ts
 ```
 export const Plans = {
   FREE: {
@@ -34,6 +34,6 @@ export const Plans = {
 ```
 
 Explicație:
--> planurile sunt structurate clar
--> limitele sunt coerente cu capitolele 7–9
--> pot fi folosite direct în rate limiting, billing, usage tracking
+- planurile sunt structurate clar
+- limitele sunt coerente cu capitolele 7–9
+- pot fi folosite direct în rate limiting, billing, usage tracking

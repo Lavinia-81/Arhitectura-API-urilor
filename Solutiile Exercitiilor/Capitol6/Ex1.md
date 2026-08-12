@@ -2,13 +2,14 @@ Ex1. Deploy pe Render — primul deploy în cloud
 
 -----
 
-R => Pași recomandați
+Pași recomandați
 
-1️ -> Creezi cont pe Render
+1️. Creezi cont pe Render
 ```https://render.com```
+
 -----
 
-2️ -> Conectezi contul la GitHub
+2️. Conectezi contul la GitHub
 ```
 mergi la Dashboard -> New Web Service
 alegi repository-ul tău
@@ -16,7 +17,7 @@ selectezi branch-ul (ideal main sau deploy)
 ```
 -----
 
-3️ -> Configurezi serviciul
+3️. Configurezi serviciul
 ```
 Environment: Node
 Build Command: npm install
@@ -26,7 +27,7 @@ node dist/index.js
 ```
 -----
 
-4️ -> Deploy automat
+4️. Deploy automat
 
 Render va:
 instala dependințele
@@ -35,7 +36,7 @@ porni serverul
 
 -----
 
-5️ -> Verifici endpoint-ul de health
+5️. Verifici endpoint-ul de health
 ```
 curl https://<numele-tau>.onrender.com/health
 Răspuns:  { "status": "ok" }
