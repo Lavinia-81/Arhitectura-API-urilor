@@ -15,7 +15,7 @@ Repository-ul este structurat editorial, clar și intuitiv, pentru a reflecta ca
 
 ### Cartea oficială
 **ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE**
-[![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S) 
+[![Buy on Amazon][(https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0H9TFM89S)][(https://www.amazon.co.uk/ARHITECTURA-SECURITATEA-API-URILOR-MODERNE-Fundamentele/dp/B0HF7SRQXS/ref=sr_1_1?crid=1IHTXJE737SJE&dib=eyJ2IjoiMSJ9.IMxUirsFZYmpNthNRJNN2sQkdFpBOA2XSuNwcnIHdqIBlmJnlEyUb7HP3TJytI0ubyO0VHKksxJVoagKSRyqKQ.1n2JOuUZ68-TbT1-i33W7tH1RiUuGJ4LyejpRa8NC3s&dib_tag=se&keywords=maria+lavinia&qid=1787075024&sprefix=maria+lavinia%2Caps%2C129&sr=8-1)]
 Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
 
 ---
