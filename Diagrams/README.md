@@ -9,7 +9,7 @@ Ele servesc ca material complementar pentru cititori, studenți, arhitecți soft
 ## Obiectivul folderului
 
 - Oferă o perspectivă vizuală asupra arhitecturii API-urilor moderne.
-- Clarifică fluxurile interne: request handling, servicii, repository pattern, caching, logging,     securitate.
+- Clarifică fluxurile interne: request handling, servicii, repository pattern, caching, logging,  securitate.
 - Completează explicațiile din carte prin diagrame intuitive și ușor de urmărit.
 - Permite cititorului să navigheze rapid între concepte complexe și să înțeleagă modul în care acestea se conectează într-un sistem real.
 - Servește ca referință vizuală pentru proiectul demonstrativ poezii-api.

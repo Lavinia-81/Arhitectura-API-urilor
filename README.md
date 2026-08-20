@@ -101,11 +101,11 @@ ARHITECTURA-API-URILOR/
 │   ├── ...
 │   └── README.md               # Documentația folderului Diagrams
 │
-├── Exercitii/                  # Propuneri de rezolvare pentru exercițiile din carte
-│   ├── Capitolul1.md
-│   ├── Capitolul2.md
+├── Solutiile Exercitiilor/     # Propuneri de rezolvare pentru exercițiile din carte
+│   ├── Capitol1
+│   ├── Capitol2
 │   ├── ...
-│   └── Capitolul12.md
+│   └── Capitol12
 │
 └── README.md                   # Acest fișier
 ```
@@ -151,7 +151,7 @@ Acestea sunt concepute pentru studiu individual, cursuri, workshop-uri sau progr
 ## Referințe
 Cartea: *ARHITECTURA ȘI SECURITATEA API-URILOR MODERNE*  
 Autor: Maria Lavinia
-Proiect demonstrativ: [poezii-api] (https://github.com/Lavinia-81/Arhitectura-API-urilor/tree/main/poezii-api)
+Proiect demonstrativ: *poezii-api* (https://github.com/Lavinia-81/Arhitectura-API-urilor/tree/main/poezii-api)
 
 ---
 
