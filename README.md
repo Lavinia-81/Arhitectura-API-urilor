@@ -19,8 +19,8 @@ Cartea reprezintă versiunea publicată, matură și completă a lucrării — u
 Este disponibilă pe Amazon:
 
 **Ediția tipărită (Paperback)** este disponibilă pe Amazon:
-
 https://www.amazon.co.uk/ARHITECTURA-SECURITATEA-API-URILOR-MODERNE-Fundamentele/dp/B0HF7SRQXS
+
 Cartea acoperă fundamentele arhitecturii API‑urilor, modele de securitate, principii de design, strategii de scalare și bune practici aplicate în sisteme moderne.
 
 ---
