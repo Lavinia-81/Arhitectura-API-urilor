@@ -13,10 +13,16 @@ Repository-ul este structurat editorial, clar și intuitiv, pentru a reflecta ca
 
 ---
 
-### Cartea oficială
-**ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE**
-[![Buy on Amazon](https://img.shields.io/badge/Amazon-Book-orange.svg)](https://www.amazon.co.uk/dp/B0HF7SRQXS)
-Cartea este disponibilă pe Amazon și reprezintă versiunea publicată, matură și completă a lucrării.
+## Cartea oficială  
+### **ARHITECTURA ȘI SECURITATEA API‑URILOR MODERNE**
+Cartea reprezintă versiunea publicată, matură și completă a lucrării — un ghid tehnic dedicat arhitecturii API‑urilor moderne, securității, scalabilității și bunelor practici din ecosistemul software.
+Este disponibilă pe Amazon:
+
+**Ediția tipărită (Paperback)** este disponibilă pe Amazon:
+
+https://www.amazon.co.uk/ARHITECTURA-SECURITATEA-API-URILOR-MODERNE-Fundamentele/dp/B0HF7SRQXS
+
+Cartea acoperă fundamentele arhitecturii API‑urilor, modele de securitate, principii de design, strategii de scalare și bune practici aplicate în sisteme moderne.
 
 ---
 

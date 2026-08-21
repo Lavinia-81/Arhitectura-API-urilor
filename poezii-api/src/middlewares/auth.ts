@@ -1,14 +1,16 @@
 // src/middlewares/auth.ts
 
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { prisma } from '../utils/prisma.js'
-import { logger } from '../utils/logger.js'
-import crypto from 'crypto'
+import { prisma } from '../utils/prisma.js'       // acces la baza de date
+import { logger } from '../utils/logger.js'       // logger pentru audit și debugging
+import crypto from 'crypto'                       // folosit pentru hashing API key
 
 // ============================================
 // 1. Funcție pentru hash-uirea cheii API
 // ============================================
 
+// Transformă cheia API reală într-un hash SHA-256.
+// În baza de date salvăm DOAR hash-ul, nu cheia reală.
 function hashApiKey(apiKey: string): string {
   return crypto.createHash('sha256').update(apiKey).digest('hex')
 }
@@ -28,15 +30,15 @@ export async function authMiddleware(
   // ============================================
 
   const publicEndpoints = [
-    '/v1/health',
-    '/v1/ping',
-    '/v1/docs',
-    '/v1/swagger',
-    '/v1/redoc',
-    '/v1/api-keys',       // generare chei API
+    '/v1/health',     // endpoint de health-check
+    '/v1/ping',       // ping simplu
+    '/v1/docs',       // documentație API
+    '/v1/swagger',    // swagger UI
+    '/v1/redoc',      // redoc UI
+    '/v1/api-keys',   // generare chei API (trebuie să fie public)
   ]
 
-  // Dacă URL-ul începe cu oricare dintre rutele publice → skip auth
+  // Dacă URL-ul începe cu un endpoint public → nu cerem API key
   if (publicEndpoints.some((p) => url.startsWith(p))) {
     return
   }
@@ -45,6 +47,7 @@ export async function authMiddleware(
   // Autentificare pe bază de API key
   // ============================================
 
+  // Cheia API trebuie trimisă în header-ul "x-api-key"
   const apiKey = request.headers['x-api-key'] as string | undefined
 
   if (!apiKey) {
@@ -57,13 +60,16 @@ export async function authMiddleware(
     })
   }
 
+  // Hash-uim cheia API pentru a o compara cu hash-ul din DB
   const keyHash = hashApiKey(apiKey)
 
   try {
+    // Căutăm cheia API în baza de date
     const apiKeyRecord = await prisma.apiKey.findUnique({
       where: { keyHash },
     })
 
+    // Dacă nu există → cheia este invalidă
     if (!apiKeyRecord) {
       logger.warn(
         { prefix: apiKey.substring(0, 8), ip: request.ip },
@@ -77,6 +83,7 @@ export async function authMiddleware(
       })
     }
 
+    // Verificăm dacă cheia API este expirată
     if (apiKeyRecord.expiresAt && apiKeyRecord.expiresAt < new Date()) {
       logger.warn(
         { keyId: apiKeyRecord.id, expiresAt: apiKeyRecord.expiresAt },
@@ -90,6 +97,7 @@ export async function authMiddleware(
       })
     }
 
+    // Actualizăm lastUsed (nu blocăm request-ul dacă update-ul eșuează)
     prisma.apiKey
       .update({
         where: { id: apiKeyRecord.id },
@@ -102,6 +110,8 @@ export async function authMiddleware(
         )
       })
 
+    // Atașăm informațiile utilizatorului la request
+    // → vor fi folosite de alte middleware-uri (ex: antiFraud)
     request.user = {
       id: apiKeyRecord.id,
       plan: apiKeyRecord.plan,
@@ -119,6 +129,7 @@ export async function authMiddleware(
 
     return
   } catch (error) {
+    // Dacă apare o eroare internă
     logger.error(
       { error, apiKeyPrefix: apiKey?.substring(0, 8) },
       'Eroare la autentificare'
@@ -136,6 +147,7 @@ export async function authMiddleware(
 // 3. Middleware pentru plan PRO
 // ============================================
 
+// Verifică dacă utilizatorul are plan PRO
 export async function verifyProPlan(req: FastifyRequest, reply: FastifyReply) {
   if (!req.user || req.user.plan !== 'PRO') {
     return reply.status(403).send({
@@ -150,6 +162,7 @@ export async function verifyProPlan(req: FastifyRequest, reply: FastifyReply) {
 // 4. Tip pentru request.user
 // ============================================
 
+// Extindem tipul FastifyRequest pentru a include user
 declare module 'fastify' {
   interface FastifyRequest {
     user?: {
